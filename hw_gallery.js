@@ -12,6 +12,7 @@ refs.galleryContainer.insertAdjacentHTML('beforeend', createImgCardsMarkup(imgIt
 refs.galleryContainer.addEventListener('click', onImgContainerClick);
 refs.closeModalEl.addEventListener('click', onModalClose);
 refs.onOverlayClick.addEventListener('click', onModalCloseToClickOverlay);
+window.addEventListener('keydown', onModalCloseToClickEscape);
 
 
 function createImgCardsMarkup(imgItem) {
@@ -59,7 +60,7 @@ function onModalCloseToClickOverlay() {
     };
 }
 /*
-Еще вариант
+Вариант:
 window.addEventListener('click', (e) => {
     if (e.target === document.querySelector('div.lightbox__overlay')) {
         onModalClose();
@@ -67,11 +68,19 @@ window.addEventListener('click', (e) => {
 });
 */
 
+function onModalCloseToClickEscape() {
+    if (event.code === 'Escape') {
+        onModalClose()
+    }
+}
+/*
+Вариант:
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Escape') {
         onModalClose()
     }    
 });
+*/
 
 // refs.closeModalEl.removeEventListener('click', onModalClose);
 
