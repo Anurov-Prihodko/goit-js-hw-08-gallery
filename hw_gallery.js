@@ -52,9 +52,10 @@ function onImgContainerClick(evt) {
 
 function onModalClose() {
     refs.modalEl.classList.remove('is-open');
+    refs.modalContentEl.src = '';
 };
 
-function onModalCloseToClickOverlay() {
+function onModalCloseToClickOverlay(event) {
     if ((event.currentTarget === event.target)) {
         onModalClose();
     };
@@ -68,9 +69,10 @@ window.addEventListener('click', (e) => {
 });
 */
 
-function onModalCloseToClickEscape() {
-    if (event.code === 'Escape') {
-        onModalClose()
+function onModalCloseToClickEscape(event) {
+    const ESC_CODE = 'Escape';
+    if (event.code === ESC_CODE) {
+        onModalClose();
     }
 }
 /*
@@ -80,6 +82,7 @@ window.addEventListener('keydown', (e) => {
         onModalClose()
     }    
 });
+undefined:1 GET https://anurov-prihodko.github.io/goit-js-hw-08-gallery/undefined 404
 */
 
 // refs.closeModalEl.removeEventListener('click', onModalClose);
