@@ -5,11 +5,13 @@ const refs = {
     modalEl: document.querySelector('.lightbox.js-lightbox'),
     galleryContainer: document.querySelector('ul.js-gallery'),
     closeModalEl: document.querySelector('button[data-action="close-lightbox"]'),
+    onOverlayClick: document.querySelector('div.lightbox__overlay'),
 }
 
 refs.galleryContainer.insertAdjacentHTML('beforeend', createImgCardsMarkup(imgItem));
 refs.galleryContainer.addEventListener('click', onImgContainerClick);
 refs.closeModalEl.addEventListener('click', onModalClose);
+refs.onOverlayClick.addEventListener('click', onModalCloseToClickOverlay);
 
 
 function createImgCardsMarkup(imgItem) {
@@ -49,17 +51,21 @@ function onImgContainerClick(evt) {
 
 function onModalClose() {
     refs.modalEl.classList.remove('is-open');
-      //  refs.closeModalEl.removeEventListener('click', onModalClose); 
 };
 
-function onModalCloseToo(e) {
-     if (e.code === 'Escape') {
-        onModalClose()
-    }
-    else if (e.target === document.querySelector('div.lightbox__overlay')) {
+function onModalCloseToClickOverlay() {
+    if ((event.currentTarget === event.target)) {
+        onModalClose();
+    };
+}
+/*
+Еще вариант
+window.addEventListener('click', (e) => {
+    if (e.target === document.querySelector('div.lightbox__overlay')) {
         onModalClose();
     }
-};
+});
+*/
 
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Escape') {
@@ -67,35 +73,29 @@ window.addEventListener('keydown', (e) => {
     }    
 });
 
-window.addEventListener('click', (e) => {
-    if (e.target === document.querySelector('div.lightbox__overlay')) {
-        onModalClose();
-    }
+// refs.closeModalEl.removeEventListener('click', onModalClose);
+
+const images = document.querySelectorAll('.gallery__image');
+const arrayImages = [];
+
+images.forEach(el => {
+    arrayImages.push(el.getAttribute('data-source'));
 });
 
 document.addEventListener('keydown', (e) => {
     let newIndex;
-    // newIndex = refs.modalContentEl.src;
-    
-    const currentId = newIndex.indexOf(refs.modalContentEl.src);
+    const currentId = arrayImages.indexOf(refs.modalContentEl.src);
     if (e.key === 'ArrowLeft') {
-        if (currentId > -1) {
-            newIndex = currentId - 1;
-            if (newIndex === -1) {
-                newIndex = newIndex.length - 1;
-            }
+        newIndex = currentId - 1;
+        if (newIndex == -1) {
+            newIndex = arrayImages.length - 1;
         }
+    } else if (e.key === 'ArrowRight') {
+                newIndex = currentId + 1;
+            if (newIndex === arrayImages.length) {
+                newIndex = 0;
+            }
     }
-
-    console.log(currentId);
+    refs.modalContentEl.src = arrayImages[newIndex];
 });
 
-
-// const test = refs.modalContentEl.src;
-
-// test.map(e => {
-//     let arrayImages = [];
-//     e.target.push(refs.modalContentEl.src)
-//     return arrayImages
-// });
-//  console.log(arrayImages);
