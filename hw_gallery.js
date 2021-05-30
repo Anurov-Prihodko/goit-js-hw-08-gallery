@@ -11,9 +11,7 @@ const refs = {
 refs.galleryContainer.insertAdjacentHTML('beforeend', createImgCardsMarkup(imgItem));
 refs.galleryContainer.addEventListener('click', onImgContainerClick);
 refs.closeModalEl.addEventListener('click', onModalClose);
-refs.onOverlayClick.addEventListener('click', onModalCloseToClickOverlay);
-window.addEventListener('keydown', onModalCloseToClickEscape);
-
+refs.onOverlayClick.addEventListener('click', onModalCloseToClickOverlay)
 
 function createImgCardsMarkup(imgItem) {
     return imgItem.map(({preview, original, description}) => {
@@ -48,11 +46,14 @@ function onImgContainerClick(evt) {
     refs.modalContentEl.src = imgEl.dataset.source;
     refs.modalContentEl.alt = imgEl.alt;
     
+    window.addEventListener('keydown', onModalCloseToClickEscape);
 };
 
 function onModalClose() {
     refs.modalEl.classList.remove('is-open');
     refs.modalContentEl.src = '';
+    refs.modalContentEl.alt = '';
+    window.removeEventListener('keydown', onModalCloseToClickEscape);
 };
 
 function onModalCloseToClickOverlay(event) {
