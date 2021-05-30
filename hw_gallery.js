@@ -100,7 +100,7 @@ document.addEventListener('keydown', (e) => {
     const currentId = arrayImages.indexOf(refs.modalContentEl.src);
     if (e.key === 'ArrowLeft') {
         newIndex = currentId - 1;
-        if (newIndex == -1) {
+        if (newIndex === -1) {
             newIndex = arrayImages.length - 1;
         }
     } else if (e.key === 'ArrowRight') {
